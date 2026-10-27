@@ -1,0 +1,3 @@
+// getAllHouses(req, res) {
+
+// }

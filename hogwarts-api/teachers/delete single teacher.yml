@@ -1,11 +1,10 @@
 info:
   name: delete single teacher
   type: http
-  seq: 5
 
 http:
   method: DELETE
-  url: http://localhost:3000/teachers/:id
+  url: http://localhost:3001/teachers/:id
   params:
     - name: id
       value: ""

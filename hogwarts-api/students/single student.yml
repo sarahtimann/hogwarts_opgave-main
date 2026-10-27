@@ -1,10 +1,14 @@
 info:
-  name: get all teachers
+  name: single student
   type: http
 
 http:
   method: GET
-  url: http://localhost:3000/teachers
+  url: http://localhost:3001/students/:id
+  params:
+    - name: id
+      value: ""
+      type: path
   auth: inherit
 
 settings:

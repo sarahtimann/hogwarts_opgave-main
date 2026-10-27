@@ -1,11 +1,14 @@
 info:
-  name: update single students
+  name: update single teacher
   type: http
-  seq: 4
 
 http:
   method: PUT
-  url: http://localhost:3000/teachers
+  url: http://localhost:3001/teachers/:id
+  params:
+    - name: id
+      value: ""
+      type: path
   auth: inherit
 
 settings:

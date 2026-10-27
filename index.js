@@ -2,15 +2,19 @@
 import express from "express";
 
 // const pool = require("./db");
+// Database
 import { pool } from "./db.js";
 
+import * as housesRepository from "./repositories/houses.repository.js";
+
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => res.send("Hello World"));
+console.log("ROOT ROUTE ER INDLÆST");
 
 //TEACHERS
 
@@ -60,7 +64,11 @@ app.put("/teachers/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const result = await pool.query("UPDATE teachers SET name = $1, house = $2 WHERE id = $3 RETURNING name, house, id", [teacher.name, teacher.house, id]);
+    const result = await pool.query("UPDATE teachers SET name = $1, house = $2 WHERE id = $3 RETURNING name, house, id", [
+      teacher.name,
+      teacher.house,
+      id,
+    ]);
 
     if (result.rowCount === 0) return res.sendStatus(404);
 
@@ -116,7 +124,11 @@ app.post("/students", async (req, res) => {
   const student = req.body;
 
   try {
-    const result = await pool.query("INSERT INTO students (name, house, year) VALUES ($1, $2, $3) RETURNING name, house, year", [student.name, student.house, student.year]);
+    const result = await pool.query("INSERT INTO students (name, house, year) VALUES ($1, $2, $3) RETURNING name, house, year", [
+      student.name,
+      student.house,
+      student.year,
+    ]);
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -131,7 +143,12 @@ app.put("/students/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const result = await pool.query("UPDATE students SET name = $1, house = $2, year = $3 WHERE id = $4 RETURNING name, house, year, id", [student.name, student.house, student.year, id]);
+    const result = await pool.query("UPDATE students SET name = $1, house = $2, year = $3 WHERE id = $4 RETURNING name, house, year, id", [
+      student.name,
+      student.house,
+      student.year,
+      id,
+    ]);
 
     if (result.rowCount === 0) return res.sendStatus(404);
 
@@ -161,8 +178,9 @@ app.delete("/students/:id", async (req, res) => {
 // GET all houses
 app.get("/houses", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM houses");
-    res.json(result.rows);
+    const allHouses = await housesRepository.getAllHouses();
+    console.log("allHouses:", allHouses);
+    res.json(allHouses);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Database error", code: err.code });
@@ -187,7 +205,11 @@ app.post("/houses", async (req, res) => {
   const house = req.body;
 
   try {
-    const result = await pool.query("INSERT INTO houses (name, color, founder) VALUES ($1, $2, $3) RETURNING name, color, founder", [house.name, house.color, house.founder]);
+    const result = await pool.query("INSERT INTO houses (name, color, founder) VALUES ($1, $2, $3) RETURNING name, color, founder", [
+      house.name,
+      house.color,
+      house.founder,
+    ]);
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -202,7 +224,12 @@ app.put("/houses/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const result = await pool.query("UPDATE houses SET name = $1, color = $2, founder = $3 WHERE id = $4 RETURNING name, color, founder, id", [house.name, house.color, house.founder, id]);
+    const result = await pool.query("UPDATE houses SET name = $1, color = $2, founder = $3 WHERE id = $4 RETURNING name, color, founder, id", [
+      house.name,
+      house.color,
+      house.founder,
+      id,
+    ]);
 
     if (result.rowCount === 0) return res.sendStatus(404);
 
@@ -258,7 +285,11 @@ app.post("/courses", async (req, res) => {
   const course = req.body;
 
   try {
-    const result = await pool.query("INSERT INTO courses (name, teacher, students) VALUES ($1, $2, $3) RETURNING name, teacher, students", [course.name, course.teacher, course.students]);
+    const result = await pool.query("INSERT INTO courses (name, teacher, students) VALUES ($1, $2, $3) RETURNING name, teacher, students", [
+      course.name,
+      course.teacher,
+      course.students,
+    ]);
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -273,7 +304,12 @@ app.put("/courses/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING name, teacher, students, id", [course.name, course.teacher, course.students, id]);
+    const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING name, teacher, students, id", [
+      course.name,
+      course.teacher,
+      course.students,
+      id,
+    ]);
 
     if (result.rowCount === 0) return res.sendStatus(404);
 

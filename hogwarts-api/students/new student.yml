@@ -1,10 +1,10 @@
 info:
-  name: get all houses
+  name: new student
   type: http
 
 http:
-  method: GET
-  url: http://localhost:3000/houses
+  method: POST
+  url: http://localhost:3001/students
   auth: inherit
 
 settings:
