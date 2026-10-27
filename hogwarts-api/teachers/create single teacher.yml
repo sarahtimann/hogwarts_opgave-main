@@ -1,0 +1,18 @@
+info:
+  name: create single teacher
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: http://localhost:3000/teachers
+  body:
+    type: json
+    data: '{ "name":"frida","house":"hus"}'
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
