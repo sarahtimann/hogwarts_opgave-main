@@ -1,7 +1,7 @@
 import * as studentsRepository from "../repositories/students.repository.js";
 
 // ALL STUDENTS
-export const getAllHouses = async (req, res) => {
+export const getAllStudents = async (req, res) => {
   try {
     const allStudents = await studentsRepository.getAllStudents();
     console.log("allStudents:", allStudents);

@@ -9,6 +9,7 @@ import { pool } from "./db.js";
 import * as houseController from "./controllers/houses.controller.js";
 import * as coursesController from "./controllers/courses.controller.js";
 import * as studentsController from "./controllers/students.controller.js";
+import * as teachersController from "./controllers/teachers.controller.js";
 
 const app = express();
 const port = 3001;
@@ -22,33 +23,10 @@ console.log("ROOT ROUTE ER INDLÆST");
 //TEACHERS
 
 //GET all teachers
-app.get("/teachers", async (req, res) => {
-  try {
-    const allTeachers = await teachersRepository.getAllTeachers();
-    console.log("allTeachers:", allTeachers);
-    res.json(allTeachers);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.get("/teachers", teachersController.getAllTeachers);
 
 // GET single teacher by ID
-app.get("/teachers/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const teacher = await teachersRepository.getTeacherById(id);
-
-    if (teacher) {
-      res.status(200).json(teacher);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.get("/teachers/:id", teachersController.getSingleTeacher);
 
 //CREATE new teacher
 app.post("/teachers", async (req, res) => {
