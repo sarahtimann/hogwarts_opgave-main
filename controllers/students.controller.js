@@ -41,3 +41,22 @@ export async function createStudent(req, res) {
     res.status(500).json({ error: "Database error" });
   }
 }
+
+// UPDATE STUDENT
+export async function updateStudent(req, res) {
+  const student = req.body;
+  const id = req.params.id;
+
+  try {
+    const updatedStudent = await studentsRepository.updateStudent(id, student);
+
+    if (updatedStudent) {
+      res.status(200).json(updatedStudent);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}

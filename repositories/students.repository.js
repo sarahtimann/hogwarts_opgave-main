@@ -27,3 +27,17 @@ export async function createStudent(student) {
   ]);
   return result.rows[0];
 }
+
+// UPDATE STUDENT
+export async function updateStudent(id, student) {
+  const result = await pool.query("UPDATE students SET name = $1, house = $2, year = $3 WHERE id = $4 RETURNING name, house, year, id", [
+    student.name,
+    student.house,
+    student.year,
+    id,
+  ]);
+  if (result.rowCount === 0) return null;
+  else {
+    return result.rows[0];
+  }
+}

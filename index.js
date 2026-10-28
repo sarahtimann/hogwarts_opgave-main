@@ -49,26 +49,7 @@ app.get("/students/:id", studentsController.getSingleStudent);
 app.post("/students", studentsController.createStudent);
 
 // UPDATE an existing student
-app.put("/students/:id", async (req, res) => {
-  const student = req.body;
-  const id = req.params.id;
-
-  try {
-    const result = await pool.query("UPDATE students SET name = $1, house = $2, year = $3 WHERE id = $4 RETURNING name, house, year, id", [
-      student.name,
-      student.house,
-      student.year,
-      id,
-    ]);
-
-    if (result.rowCount === 0) return res.sendStatus(404);
-
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.put("/students/:id", studentsController.updateStudent);
 
 // DELETE single student
 app.delete("/students/:id", async (req, res) => {
