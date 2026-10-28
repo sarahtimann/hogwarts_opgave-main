@@ -32,25 +32,7 @@ app.get("/teachers/:id", teachersController.getSingleTeacher);
 app.post("/teachers", teachersController.createTeacher);
 
 // UPDATE an existing teacher
-app.put("/teachers/:id", async (req, res) => {
-  const teacher = req.body;
-  const id = req.params.id;
-
-  try {
-    const result = await pool.query("UPDATE teachers SET name = $1, house = $2 WHERE id = $3 RETURNING name, house, id", [
-      teacher.name,
-      teacher.house,
-      id,
-    ]);
-
-    if (result.rowCount === 0) return res.sendStatus(404);
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.put("/teachers/:id", teachersController.updateTeacher);
 
 // DELETE single teacher
 app.delete("/teachers/:id", async (req, res) => {
