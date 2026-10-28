@@ -8,6 +8,8 @@ import { pool } from "./db.js";
 // import * as housesRepository from "./repositories/houses.repository.js";
 import * as houseController from "./controllers/houses.controller.js";
 
+import * as coursesController from "./controllers/courses.controller.js";
+
 const app = express();
 const port = 3001;
 
@@ -247,33 +249,10 @@ app.delete("/houses/:id", async (req, res) => {
 //COURSES
 
 // GET all courses
-app.get("/courses", async (req, res) => {
-  try {
-    const allCourses = await coursesRepository.getAllCourses();
-    console.log("allCourses:", allCourses);
-    res.json(allCourses);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.get("/courses", coursesController.getAllCourses);
 
 // GET single course by ID
-app.get("/courses/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const course = await coursesRepository.getCourseById(id);
-
-    if (course) {
-      res.status(200).json(course);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.get("/courses/:id", coursesController.getSingleCourse);
 
 // CREATE new course
 app.post("/courses", async (req, res) => {
