@@ -1,0 +1,18 @@
+info:
+  name: remove student from existing course
+  type: http
+
+http:
+  method: DELETE
+  url: http://localhost:3001/courses/:id/students/id
+  params:
+    - name: id
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

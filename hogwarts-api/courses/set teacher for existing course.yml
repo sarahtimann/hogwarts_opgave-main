@@ -1,0 +1,18 @@
+info:
+  name: set teacher for existing course
+  type: http
+
+http:
+  method: PUT
+  url: http://localhost:3001/courses/:id/teachers/:id
+  params:
+    - name: id
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
