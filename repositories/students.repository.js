@@ -17,3 +17,13 @@ export async function getStudentById(id) {
     return one.rows[0];
   }
 }
+
+// CREATE STUDENT
+export async function createStudent(student) {
+  const result = await pool.query("INSERT INTO students (name, house, year) VALUES ($1, $2, $3) RETURNING name, house, year", [
+    student.name,
+    student.house,
+    student.year,
+  ]);
+  return result.rows[0];
+}

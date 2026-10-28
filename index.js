@@ -46,22 +46,7 @@ app.get("/students", studentsController.getAllStudents);
 app.get("/students/:id", studentsController.getSingleStudent);
 
 // CREATE new student
-app.post("/students", async (req, res) => {
-  const student = req.body;
-
-  try {
-    const result = await pool.query("INSERT INTO students (name, house, year) VALUES ($1, $2, $3) RETURNING name, house, year", [
-      student.name,
-      student.house,
-      student.year,
-    ]);
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.post("/students", studentsController.createStudent);
 
 // UPDATE an existing student
 app.put("/students/:id", async (req, res) => {

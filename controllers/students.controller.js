@@ -28,3 +28,16 @@ export async function getSingleStudent(req, res) {
     res.status(500).json({ error: "Database error" });
   }
 }
+
+// CREATE STUDENT
+export async function createStudent(req, res) {
+  const student = req.body;
+  try {
+    const newStudent = await studentsRepository.createStudent(student);
+
+    res.status(201).json(newStudent);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}
