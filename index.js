@@ -63,58 +63,58 @@ app.get("/houses", houseController.getAllHouses);
 app.get("/houses/:id", houseController.getSingleHouse);
 
 // CREATE new house
-app.post("/houses", async (req, res) => {
-  const house = req.body;
+// app.post("/houses", async (req, res) => {
+//   const house = req.body;
 
-  try {
-    const result = await pool.query("INSERT INTO houses (name, color, founder) VALUES ($1, $2, $3) RETURNING name, color, founder", [
-      house.name,
-      house.color,
-      house.founder,
-    ]);
+//   try {
+//     const result = await pool.query("INSERT INTO houses (name, color, founder) VALUES ($1, $2, $3) RETURNING name, color, founder", [
+//       house.name,
+//       house.color,
+//       house.founder,
+//     ]);
 
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+//     res.status(201).json(result.rows[0]);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Database error" });
+//   }
+// });
 
 // UPDATE an existing house
-app.put("/houses/:id", async (req, res) => {
-  const house = req.body;
-  const id = req.params.id;
+// app.put("/houses/:id", async (req, res) => {
+//   const house = req.body;
+//   const id = req.params.id;
 
-  try {
-    const result = await pool.query("UPDATE houses SET name = $1, color = $2, founder = $3 WHERE id = $4 RETURNING name, color, founder, id", [
-      house.name,
-      house.color,
-      house.founder,
-      id,
-    ]);
+//   try {
+//     const result = await pool.query("UPDATE houses SET name = $1, color = $2, founder = $3 WHERE id = $4 RETURNING name, color, founder, id", [
+//       house.name,
+//       house.color,
+//       house.founder,
+//       id,
+//     ]);
 
-    if (result.rowCount === 0) return res.sendStatus(404);
+//     if (result.rowCount === 0) return res.sendStatus(404);
 
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+//     res.status(200).json(result.rows[0]);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Database error" });
+//   }
+// });
 
 // DELETE single house
-app.delete("/houses/:id", async (req, res) => {
-  try {
-    const del = await pool.query("DELETE FROM houses WHERE id = $1", [req.params.id]);
+// app.delete("/houses/:id", async (req, res) => {
+//   try {
+//     const del = await pool.query("DELETE FROM houses WHERE id = $1", [req.params.id]);
 
-    if (del.rowCount === 0) return res.sendStatus(404);
+//     if (del.rowCount === 0) return res.sendStatus(404);
 
-    res.sendStatus(204);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+//     res.sendStatus(204);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Database error" });
+//   }
+// });
 
 //COURSES
 
