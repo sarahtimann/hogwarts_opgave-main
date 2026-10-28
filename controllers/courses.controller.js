@@ -60,3 +60,18 @@ export async function updateCourse(req, res) {
     res.status(500).json({ error: "Database error" });
   }
 }
+
+// DELETE SINGLE COURSE
+export async function deleteCourse(req, res) {
+  try {
+    const id = req.params.id;
+
+    const deletedCourse = await coursesRepository.deleteCourse(id);
+    if (deletedCourse.rowCount === 0) return res.sendStatus(404);
+
+    res.sendStatus(204);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}

@@ -131,17 +131,6 @@ app.post("/courses", coursesController.createCourse);
 app.put("/courses/:id", coursesController.updateCourse);
 
 // DELETE single course
-app.delete("/courses/:id", async (req, res) => {
-  try {
-    const del = await pool.query("DELETE FROM courses WHERE id = $1", [req.params.id]);
-
-    if (del.rowCount === 0) return res.sendStatus(404);
-
-    res.sendStatus(204);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.delete("/courses/:id", coursesController.deleteCourse);
 
 app.listen(port, () => console.log(`Server kører på http://localhost:${port}`));

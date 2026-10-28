@@ -66,9 +66,9 @@ export async function deleteStudent(req, res) {
   const id = req.params.id;
 
   try {
-    const deletedTeacher = await pool.query("DELETE FROM students WHERE id = $1", [req.params.id]);
+    const deletedStudent = await pool.query("DELETE FROM students WHERE id = $1", [req.params.id]);
 
-    if (deletedTeacher.rowCount === 0) return res.sendStatus(404);
+    if (deletedStudent.rowCount === 0) return res.sendStatus(404);
 
     res.sendStatus(204);
   } catch (err) {

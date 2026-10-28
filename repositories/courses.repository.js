@@ -30,14 +30,20 @@ export async function createCourse(course) {
 
 // UPDATE COURSE
 export async function updateCourse(id, course) {
-   const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING name, teacher, students, id", [
-      course.name,
-      course.teacher,
-      course.students,
-      id,
-    ]);
-    if (result.rowCount === 0) return null;
-    else {
-      return result.rows[0];
-    }
+  const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING name, teacher, students, id", [
+    course.name,
+    course.teacher,
+    course.students,
+    id,
+  ]);
+  if (result.rowCount === 0) return null;
+  else {
+    return result.rows[0];
+  }
+}
+
+// DELETE SINGLE COURSE
+export async function deleteCourse(id) {
+  const result = await pool.query("DELETE FROM courses WHERE id = $1", [id]);
+  return result.rowCount;
 }
