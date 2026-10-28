@@ -1,0 +1,14 @@
+info:
+  name: new course
+  type: http
+
+http:
+  method: POST
+  url: http://localhost:3001/courses
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

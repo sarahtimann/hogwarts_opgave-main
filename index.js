@@ -125,22 +125,7 @@ app.get("/courses", coursesController.getAllCourses);
 app.get("/courses/:id", coursesController.getSingleCourse);
 
 // CREATE new course
-app.post("/courses", async (req, res) => {
-  const course = req.body;
-
-  try {
-    const result = await pool.query("INSERT INTO courses (name, teacher, students) VALUES ($1, $2, $3) RETURNING name, teacher, students", [
-      course.name,
-      course.teacher,
-      course.students,
-    ]);
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.post("/courses", coursesController.createCourse);
 
 // UPDATE an existing course
 app.put("/courses/:id", async (req, res) => {
