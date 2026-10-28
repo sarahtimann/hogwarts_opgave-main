@@ -21,10 +21,9 @@ console.log("ROOT ROUTE ER INDLÆST");
 //GET all teachers
 app.get("/teachers", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM teachers");
-    console.log(result);
-
-    res.json(result.rows);
+    const allTeachers = await teachersRepository.getAllTeachers();
+    console.log("allTeachers:", allTeachers);
+    res.json(allTeachers);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Database error", code: err.code });
@@ -34,10 +33,14 @@ app.get("/teachers", async (req, res) => {
 // GET single teacher by ID
 app.get("/teachers/:id", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM teachers WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
+    const id = req.params.id;
+    const teacher = await teachersRepository.getTeacherById(id);
 
-    res.status(200).json(result.rows[0]);
+    if (teacher) {
+      res.status(200).json(teacher);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Database error" });
@@ -98,8 +101,9 @@ app.delete("/teachers/:id", async (req, res) => {
 // GET all students
 app.get("/students", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM students");
-    res.json(result.rows);
+    const allStudents = await studentsRepository.getAllStudents();
+    console.log("allStudents:", allStudents);
+    res.json(allStudents);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Database error", code: err.code });
@@ -109,10 +113,14 @@ app.get("/students", async (req, res) => {
 // GET single student by ID
 app.get("/students/:id", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM students WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
+    const id = req.params.id;
+    const student = await studentsRepository.getStudentById(id);
 
-    res.status(200).json(result.rows[0]);
+    if (student) {
+      res.status(200).json(student);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Database error" });
@@ -190,10 +198,14 @@ app.get("/houses", async (req, res) => {
 // GET single house by ID
 app.get("/houses/:id", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM houses WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
+    const id = req.params.id;
+    const house = await housesRepository.getHouseById(id);
 
-    res.status(200).json(result.rows[0]);
+    if (house) {
+      res.status(200).json(house);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Database error" });
@@ -259,8 +271,9 @@ app.delete("/houses/:id", async (req, res) => {
 // GET all courses
 app.get("/courses", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM courses");
-    res.json(result.rows);
+    const allCourses = await coursesRepository.getAllCourses();
+    console.log("allCourses:", allCourses);
+    res.json(allCourses);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Database error", code: err.code });
@@ -270,10 +283,14 @@ app.get("/courses", async (req, res) => {
 // GET single course by ID
 app.get("/courses/:id", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM courses WHERE id = $1", [req.params.id]);
-    if (result.rowCount === 0) return res.sendStatus(404);
+    const id = req.params.id;
+    const course = await coursesRepository.getCourseById(id);
 
-    res.status(200).json(result.rows[0]);
+    if (course) {
+      res.status(200).json(course);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Database error" });
