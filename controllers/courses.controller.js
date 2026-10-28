@@ -41,3 +41,22 @@ export async function createCourse(req, res) {
     res.status(500).json({ error: "Database error" });
   }
 }
+
+// UPDATE COURSE
+export async function updateCourse(req, res) {
+  const course = req.body;
+  const id = req.params.id;
+
+  try {
+    const updatedCourse = await coursesRepository.updateCourse(id, course);
+
+    if (updatedCourse) {
+      res.status(200).json(updatedCourse);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}

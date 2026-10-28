@@ -128,26 +128,7 @@ app.get("/courses/:id", coursesController.getSingleCourse);
 app.post("/courses", coursesController.createCourse);
 
 // UPDATE an existing course
-app.put("/courses/:id", async (req, res) => {
-  const course = req.body;
-  const id = req.params.id;
-
-  try {
-    const result = await pool.query("UPDATE courses SET name = $1, teacher = $2, students = $3 WHERE id = $4 RETURNING name, teacher, students, id", [
-      course.name,
-      course.teacher,
-      course.students,
-      id,
-    ]);
-
-    if (result.rowCount === 0) return res.sendStatus(404);
-
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.put("/courses/:id", coursesController.updateCourse);
 
 // DELETE single course
 app.delete("/courses/:id", async (req, res) => {
