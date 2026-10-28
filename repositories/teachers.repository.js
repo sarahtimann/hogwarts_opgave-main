@@ -36,3 +36,9 @@ export async function updateTeacher(id, teacher) {
   if (result.rowCount === 0) return res.sendStatus(404);
   return result.rows[0];
 }
+
+// DELETE TEACHER
+export async function deleteTeacher(id) {
+    const result = await pool.query("DELETE FROM teachers WHERE id = $1", [id]);
+    return result.rowCount;
+}

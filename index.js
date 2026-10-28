@@ -35,18 +35,7 @@ app.post("/teachers", teachersController.createTeacher);
 app.put("/teachers/:id", teachersController.updateTeacher);
 
 // DELETE single teacher
-app.delete("/teachers/:id", async (req, res) => {
-  try {
-    const del = await pool.query("DELETE FROM teachers WHERE id = $1", [req.params.id]);
-
-    if (del.rowCount === 0) return res.sendStatus(404);
-
-    res.sendStatus(204);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.delete("/teachers/:id", teachersController.deleteTeacher);
 
 //STUDENTS
 
