@@ -60,3 +60,19 @@ export async function updateStudent(req, res) {
     res.status(500).json({ error: "Database error" });
   }
 }
+
+// DELETE STUDENT
+export async function deleteStudent(req, res) {
+  const id = req.params.id;
+
+  try {
+    const deletedTeacher = await pool.query("DELETE FROM students WHERE id = $1", [req.params.id]);
+
+    if (deletedTeacher.rowCount === 0) return res.sendStatus(404);
+
+    res.sendStatus(204);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}

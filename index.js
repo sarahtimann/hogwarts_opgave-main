@@ -52,18 +52,7 @@ app.post("/students", studentsController.createStudent);
 app.put("/students/:id", studentsController.updateStudent);
 
 // DELETE single student
-app.delete("/students/:id", async (req, res) => {
-  try {
-    const del = await pool.query("DELETE FROM students WHERE id = $1", [req.params.id]);
-
-    if (del.rowCount === 0) return res.sendStatus(404);
-
-    res.sendStatus(204);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.delete("/students/:id", studentsController.deleteStudent);
 
 //HOUSES
 

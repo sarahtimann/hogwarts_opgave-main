@@ -41,3 +41,9 @@ export async function updateStudent(id, student) {
     return result.rows[0];
   }
 }
+
+// DELETE STUDENT
+export async function deleteStudent(id) {
+  const result = await pool.query("DELETE FROM students WHERE id = $1", [id]);
+  return result.rowCount;
+}
