@@ -17,3 +17,10 @@ export async function getTeacherById(id) {
     return one.rows[0];
   }
 }
+
+// CREATE TEACHER
+export async function createTeacher(teacher) {
+  const result = await pool.query("INSERT INTO teachers (name, house) VALUES ($1, $2) RETURNING name, house", [teacher.name, teacher.house]);
+
+return result.rows[0];
+  }

@@ -29,18 +29,7 @@ app.get("/teachers", teachersController.getAllTeachers);
 app.get("/teachers/:id", teachersController.getSingleTeacher);
 
 //CREATE new teacher
-app.post("/teachers", async (req, res) => {
-  const teacher = req.body;
-
-  try {
-    const result = await pool.query("INSERT INTO teachers (name, house) VALUES ($1, $2) RETURNING name, house", [teacher.name, teacher.house]);
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.post("/teachers", teachersController.createTeacher);
 
 // UPDATE an existing teacher
 app.put("/teachers/:id", async (req, res) => {

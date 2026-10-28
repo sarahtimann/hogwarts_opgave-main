@@ -28,3 +28,15 @@ export async function getSingleTeacher(req, res) {
     res.status(500).json({ error: "Database error" });
   }
 }
+
+// CREATE TEACHER
+export async function createTeacher(req, res) {
+  const teacher = req.body;
+  try {
+    const newTeacher = await teachersRepository.createTeacher(teacher);
+    res.status(201).json(newTeacher);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error", code: err.code });
+  }
+}
