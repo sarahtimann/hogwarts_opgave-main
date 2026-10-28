@@ -7,8 +7,8 @@ import { pool } from "./db.js";
 
 // import * as housesRepository from "./repositories/houses.repository.js";
 import * as houseController from "./controllers/houses.controller.js";
-
 import * as coursesController from "./controllers/courses.controller.js";
+import * as studentsController from "./controllers/students.controller.js";
 
 const app = express();
 const port = 3001;
@@ -102,33 +102,10 @@ app.delete("/teachers/:id", async (req, res) => {
 //STUDENTS
 
 // GET all students
-app.get("/students", async (req, res) => {
-  try {
-    const allStudents = await studentsRepository.getAllStudents();
-    console.log("allStudents:", allStudents);
-    res.json(allStudents);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.get("/students", studentsController.getAllStudents);
 
 // GET single student by ID
-app.get("/students/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const student = await studentsRepository.getStudentById(id);
-
-    if (student) {
-      res.status(200).json(student);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
+app.get("/students/:id", studentsController.getSingleStudent);
 
 // CREATE new student
 app.post("/students", async (req, res) => {
