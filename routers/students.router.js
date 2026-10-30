@@ -4,9 +4,9 @@ import * as studentsController from "../controllers/students.controller.js";
 const studentsRouter = express.Router();
 
 // GET all students
-studentsRouter.get("/students", studentsController.getAllStudents);
+studentsRouter.get("/", studentsController.getAllStudents);
 
 // GET single student by ID
-studentsRouter.get("/students/:id", studentsController.getSingleStudent);
+studentsRouter.get("/:id", studentsController.getSingleStudent);
 
 export default studentsRouter;

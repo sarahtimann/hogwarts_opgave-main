@@ -9,9 +9,12 @@ import { pool } from "./db.js";
 // import * as houseController from "./controllers/houses.controller.js";
 import * as coursesController from "./controllers/courses.controller.js";
 import * as studentsController from "./controllers/students.controller.js";
-import * as teachersController from "./controllers/teachers.controller.js";
+// import * as teachersController from "./controllers/teachers.controller.js";
 
 import housesRouter from "./routers/houses.router.js";
+import coursesRouter from "./routers/courses.router.js";
+import studentsRouter from "./routers/students.router.js";
+import teachersRouter from "./routers/teachers.router.js";
 
 const app = express();
 const port = 3001;
@@ -27,15 +30,6 @@ console.log("ROOT ROUTE ER INDLÆST");
 // });
 
 //TEACHERS
-
-//CREATE new teacher
-app.post("/teachers", teachersController.createTeacher);
-
-// UPDATE an existing teacher
-app.put("/teachers/:id", teachersController.updateTeacher);
-
-// DELETE single teacher
-app.delete("/teachers/:id", teachersController.deleteTeacher);
 
 app.use("/teachers", teachersRouter);
 

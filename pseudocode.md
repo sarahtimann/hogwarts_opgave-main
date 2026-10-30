@@ -2,15 +2,27 @@
 
 ## Generelt
 
-Routes sender requesten videre til den rigtige controller.
+### Router
+- Taler med klienten.
+- Kender lidt til HTTP og ved noget om metoder (GET, POST, PUT, DELETE) og paths (`/path/`).
+- Fordeler arbejdet videre til de rigtige controllere.
+- Ved ellers ikke noget om, hvad der foregår i systemet.
 
-Controlleren:
+### Controller
+- Taler flydende HTTP med klienten.
+- Har styr på requests og responses, HTTP-statuskoder, JSON osv.
+- Ved ikke noget om selve dataene, der bliver sendt eller modtaget.
+- Ved kun, hvordan dataene skal håndteres og gives videre.
+- Læser data fra requesten.
+- Kalder repository.
+- Sender resultatet tilbage til klienten med den rigtige HTTP-statuskode.
 
-- læser data fra requesten
-- kalder repository
-- sender resultatet tilbage med den rigtige statuskode
-
-Repository står for SQL og databasen.
+### Repository
+- Er den eneste del, der taler direkte med databasen.
+- Forstår SQL.
+- Ved, hvordan databasen er bygget op, og hvordan data skal modtages fra og leveres videre til controlleren.
+- Ved ikke noget om HTTP, statuskoder eller fejlkoder.
+- Arbejder kun med data.
 
 -
 

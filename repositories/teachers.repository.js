@@ -20,16 +20,16 @@ export async function getTeacherById(id) {
 
 // CREATE TEACHER
 export async function createTeacher(teacher) {
-  const result = await pool.query("INSERT INTO teachers (name, house) VALUES ($1, $2) RETURNING name, house", [teacher.name, teacher.house]);
+  const result = await pool.query("INSERT INTO teachers (name, house_id) VALUES ($1, $2) RETURNING name, house_id", [teacher.name, teacher.houseId]);
 
   return result.rows[0];
 }
 
 // UPDATE TEACHER
 export async function updateTeacher(id, teacher) {
-  const result = await pool.query("UPDATE teachers SET name = $1, house = $2 WHERE id = $3 RETURNING name, house, id", [
+  const result = await pool.query("UPDATE teachers SET name = $1, house_id = $2 WHERE id = $3 RETURNING name, house_id, id", [
     teacher.name,
-    teacher.house,
+    teacher.houseId,
     id,
   ]);
 
@@ -39,6 +39,6 @@ export async function updateTeacher(id, teacher) {
 
 // DELETE TEACHER
 export async function deleteTeacher(id) {
-    const result = await pool.query("DELETE FROM teachers WHERE id = $1", [id]);
-    return result.rowCount;
+  const result = await pool.query("DELETE FROM teachers WHERE id = $1", [id]);
+  return result.rowCount;
 }
