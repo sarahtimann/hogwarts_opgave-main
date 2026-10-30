@@ -6,10 +6,12 @@ import express from "express";
 import { pool } from "./db.js";
 
 // import * as housesRepository from "./repositories/houses.repository.js";
-import * as houseController from "./controllers/houses.controller.js";
+// import * as houseController from "./controllers/houses.controller.js";
 import * as coursesController from "./controllers/courses.controller.js";
 import * as studentsController from "./controllers/students.controller.js";
 import * as teachersController from "./controllers/teachers.controller.js";
+
+import housesRouter from "./routers/houses.router.js";
 
 const app = express();
 const port = 3001;
@@ -58,13 +60,9 @@ app.put("/students/:id", studentsController.updateStudent);
 // DELETE single student
 app.delete("/students/:id", studentsController.deleteStudent);
 
-//HOUSES
+// HOUSES
 
-// GET all houses
-app.get("/houses", houseController.getAllHouses);
-
-// GET single house by ID
-app.get("/houses/:id", houseController.getSingleHouse);
+app.use(housesRouter);
 
 // CREATE new house
 // app.post("/houses", async (req, res) => {
