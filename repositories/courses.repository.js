@@ -20,11 +20,13 @@ export async function getCourseById(id) {
 
 // CREATE COURSE
 export async function createCourse(course) {
-  const result = await pool.query("INSERT INTO courses (name, teacher, students) VALUES ($1, $2, $3) RETURNING name, teacher, students", [
-    course.name,
-    course.teacher,
-    course.students,
-  ]);
+  const result = await pool.query(
+    `INSERT INTO courses (name, teacher_id)
+     VALUES ($1, $2)
+     RETURNING id, name, teacher_id`,
+    [course.name, course.teacherId],
+  );
+
   return result.rows[0];
 }
 

@@ -35,7 +35,7 @@ export async function createCourse(req, res) {
   try {
     const newCourse = await coursesRepository.createCourse(course);
 
-    res.status(201).json(result.rows[0]);
+    res.status(201).json(newCourse);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Database error" });
