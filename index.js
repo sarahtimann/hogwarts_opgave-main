@@ -97,24 +97,6 @@ app.use("/houses", housesRouter);
 
 //COURSES
 
-// CREATE new course
-app.post("/courses", coursesController.createCourse);
-
-// UPDATE an existing course
-app.put("/courses/:id", coursesController.updateCourse);
-
-// SET teacher for existing course // NOT WORKING
-app.put("/courses/:id/teachers/:teacherId", coursesController.setTeacherForCourse);
-
-// ADD student to existing course // NOT WORKING
-app.post("/courses/:id/students/:studentId", coursesController.addStudentToCourse);
-
-// REMOVE student from existing course // NOT WORKING
-app.delete("/courses/:id/students/:studentId", coursesController.removeStudentFromCourse);
-
-// DELETE single course
-app.delete("/courses/:id", coursesController.deleteCourse);
-
 app.use("/courses", coursesRouter);
 
 // TESTS

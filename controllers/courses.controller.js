@@ -67,7 +67,7 @@ export async function deleteCourse(req, res) {
     const id = req.params.id;
 
     const deletedCourse = await coursesRepository.deleteCourse(id);
-    if (deletedCourse.rowCount === 0) return res.sendStatus(404);
+    if (deletedCourse === 0) return res.sendStatus(404);
 
     res.sendStatus(204);
   } catch (err) {
