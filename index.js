@@ -28,12 +28,6 @@ console.log("ROOT ROUTE ER INDLÆST");
 
 //TEACHERS
 
-//GET all teachers
-app.get("/teachers", teachersController.getAllTeachers);
-
-// GET single teacher by ID
-app.get("/teachers/:id", teachersController.getSingleTeacher);
-
 //CREATE new teacher
 app.post("/teachers", teachersController.createTeacher);
 
@@ -43,13 +37,9 @@ app.put("/teachers/:id", teachersController.updateTeacher);
 // DELETE single teacher
 app.delete("/teachers/:id", teachersController.deleteTeacher);
 
+app.use("/teachers", teachersRouter);
+
 //STUDENTS
-
-// GET all students
-app.get("/students", studentsController.getAllStudents);
-
-// GET single student by ID
-app.get("/students/:id", studentsController.getSingleStudent);
 
 // CREATE new student
 app.post("/students", studentsController.createStudent);
@@ -59,6 +49,8 @@ app.put("/students/:id", studentsController.updateStudent);
 
 // DELETE single student
 app.delete("/students/:id", studentsController.deleteStudent);
+
+app.use("/students", studentsRouter);
 
 // HOUSES
 
@@ -120,12 +112,6 @@ app.use("/houses", housesRouter);
 
 //COURSES
 
-// GET all courses
-app.get("/courses", coursesController.getAllCourses);
-
-// GET single course by ID
-app.get("/courses/:id", coursesController.getSingleCourse);
-
 // CREATE new course
 app.post("/courses", coursesController.createCourse);
 
@@ -144,8 +130,14 @@ app.delete("/courses/:id/students/:studentId", coursesController.removeStudentFr
 // DELETE single course
 app.delete("/courses/:id", coursesController.deleteCourse);
 
+app.use("/courses", coursesRouter);
+
+// TESTS
+
 app.post("/courses/test", (req, res) => {
   res.send("COURSES POST VIRKER");
 });
+
+// PORT
 
 app.listen(port, () => console.log(`Server kører på http://localhost:${port}`));
