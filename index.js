@@ -20,6 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => res.send("Hello World"));
 console.log("ROOT ROUTE ER INDLÆST");
 
+// app.post("/test", (req, res) => {
+//   res.send("TEST ROUTE VIRKER");
+// });
+
 //TEACHERS
 
 //GET all teachers
@@ -130,7 +134,20 @@ app.post("/courses", coursesController.createCourse);
 // UPDATE an existing course
 app.put("/courses/:id", coursesController.updateCourse);
 
+// SET teacher for existing course // NOT WORKING
+app.put("/courses/:id/teachers/:teacherId", coursesController.setTeacherForCourse);
+
+// ADD student to existing course // NOT WORKING
+app.post("/courses/:id/students/:studentId", coursesController.addStudentToCourse);
+
+// REMOVE student from existing course // NOT WORKING
+app.delete("/courses/:id/students/:studentId", coursesController.removeStudentFromCourse);
+
 // DELETE single course
 app.delete("/courses/:id", coursesController.deleteCourse);
+
+app.post("/courses/test", (req, res) => {
+  res.send("COURSES POST VIRKER");
+});
 
 app.listen(port, () => console.log(`Server kører på http://localhost:${port}`));

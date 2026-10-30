@@ -42,7 +42,7 @@ export async function createCourse(req, res) {
   }
 }
 
-// UPDATE COURSE
+// UPDATE EXISTING COURSE
 export async function updateCourse(req, res) {
   const course = req.body;
   const id = req.params.id;
@@ -68,6 +68,63 @@ export async function deleteCourse(req, res) {
 
     const deletedCourse = await coursesRepository.deleteCourse(id);
     if (deletedCourse.rowCount === 0) return res.sendStatus(404);
+
+    res.sendStatus(204);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}
+
+// SET TEACHER FOR EXISTING COURSE
+export async function setTeacherForCourse(req, res) {
+  const courseId = req.params.id;
+  const teacherId = req.params.teacherId;
+
+  try {
+    const updatedCourse = await coursesRepository.setTeacherForCourse(courseId, teacherId);
+
+    if (updatedCourse) {
+      res.status(200).json(updatedCourse);
+    } else {
+      res.status(404).json({
+        error: "Course or teacher not found",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}
+
+// ADD STUDENT TO EXISTING COURSE
+export async function addStudentToCourse(req, res) {
+  const courseId = req.params.id;
+  const studentId = req.params.studentId;
+
+  try {
+    const result = await coursesRepository.addStudentToCourse(courseId, studentId);
+
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Database error" });
+  }
+}
+
+// REMOVE STUDENT FROM EXISTING COURSE
+export async function removeStudentFromCourse(req, res) {
+  const courseId = req.params.id;
+  const studentId = req.params.studentId;
+
+  try {
+    const deletedStudent = await coursesRepository.removeStudentFromCourse(courseId, studentId);
+
+    if (deletedStudent === 0) {
+      return res.status(404).json({
+        error: "Course or student not found",
+      });
+    }
 
     res.sendStatus(204);
   } catch (err) {
