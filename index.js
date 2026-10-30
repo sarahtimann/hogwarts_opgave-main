@@ -62,7 +62,7 @@ app.delete("/students/:id", studentsController.deleteStudent);
 
 // HOUSES
 
-app.use(housesRouter);
+app.use("/houses", housesRouter);
 
 // CREATE new house
 // app.post("/houses", async (req, res) => {
