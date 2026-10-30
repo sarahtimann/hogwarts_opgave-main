@@ -64,8 +64,7 @@ export async function updateTeacher(req, res) {
 export async function deleteTeacher(req, res) {
   const id = req.params.id;
   try {
-    const deletedTeacher = await pool.query("DELETE FROM teachers WHERE id = $1", [req.params.id]);
-
+    const deletedTeacher = await teachersRepository.deleteTeacher(id);
     if (deletedTeacher.rowCount === 0) return res.sendStatus(404);
 
     res.sendStatus(204);

@@ -35,15 +35,6 @@ app.use("/teachers", teachersRouter);
 
 //STUDENTS
 
-// CREATE new student
-app.post("/students", studentsController.createStudent);
-
-// UPDATE an existing student
-app.put("/students/:id", studentsController.updateStudent);
-
-// DELETE single student
-app.delete("/students/:id", studentsController.deleteStudent);
-
 app.use("/students", studentsRouter);
 
 // HOUSES

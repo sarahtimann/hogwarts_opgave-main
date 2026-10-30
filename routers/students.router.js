@@ -9,4 +9,13 @@ studentsRouter.get("/", studentsController.getAllStudents);
 // GET single student by ID
 studentsRouter.get("/:id", studentsController.getSingleStudent);
 
+// CREATE new student
+studentsRouter.post("/", studentsController.createStudent);
+
+// UPDATE an existing student
+studentsRouter.put("/:id", studentsController.updateStudent);
+
+// DELETE single student
+studentsRouter.delete("/:id", studentsController.deleteStudent);
+
 export default studentsRouter;
