@@ -3,12 +3,14 @@
 ## Generelt
 
 ### Router
+
 - Taler med klienten.
 - Kender lidt til HTTP og ved noget om metoder (GET, POST, PUT, DELETE) og paths (`/path/`).
 - Fordeler arbejdet videre til de rigtige controllere.
 - Ved ellers ikke noget om, hvad der foregår i systemet.
 
 ### Controller
+
 - Taler flydende HTTP med klienten.
 - Har styr på requests og responses, HTTP-statuskoder, JSON osv.
 - Ved ikke noget om selve dataene, der bliver sendt eller modtaget.
@@ -18,6 +20,7 @@
 - Sender resultatet tilbage til klienten med den rigtige HTTP-statuskode.
 
 ### Repository
+
 - Er den eneste del, der taler direkte med databasen.
 - Forstår SQL.
 - Ved, hvordan databasen er bygget op, og hvordan data skal modtages fra og leveres videre til controlleren.
@@ -77,6 +80,7 @@
 - Slet teacher fra databasen.
 - Hvis den blev slettet, send status 204.
 - Hvis den ikke findes, send status 404.
+- Hvis posten ikke kan slettes, fordi andre tabeller stadig refererer til den, send en databasefejl med status 500.
 
 -
 
@@ -92,6 +96,7 @@ Students fungerer på samme måde som teachers:
 
 Ved succes bruges henholdsvis status 200, 201 eller 204.
 Hvis en student ikke findes, bruges status 404.
+Hvis studenten ikke kan slettes, fordi andre tabeller stadig refererer til den, send en databasefejl med status 500.
 
 -
 
@@ -151,3 +156,4 @@ Hvis en student ikke findes, bruges status 404.
 - Slet course fra databasen.
 - Hvis den blev slettet, send status 204.
 - Hvis den ikke findes, send status 404.
+- Hvis posten ikke kan slettes, fordi andre tabeller stadig refererer til den, send en databasefejl med status 500.

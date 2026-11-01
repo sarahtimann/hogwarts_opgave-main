@@ -56,7 +56,9 @@ Databasen indeholder følgende tabeller:
 
 Tabellen `course_students` bruges som junctiontabel mellem courses og students, så et course kan have flere students, og en student kan være tilmeldt flere courses.
 
-SQL-koden til at oprette tabellerne og indsætte eksempeldata findes i `schema.sql`.
+SQL-koden til at oprette tabellerne og indsætte eksempeldata findes i `database/hogwarts_database_localhost-2026_11_01_13_45_41-dump.sql`.
+
+En teacher, student eller course kan ikke slettes, hvis andre tabeller stadig refererer til den via en foreign key.
 
 ## Projektstruktur og arkitektur
 
