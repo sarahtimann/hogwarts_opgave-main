@@ -1,12 +1,12 @@
 import express from "express";
 import * as houseController from "../controllers/houses.controller.js";
 
-const housesRouter = express.Router();
+const router = express.Router();
 
 // GET all houses
-housesRouter.get("/", houseController.getAllHouses);
+router.get("/", houseController.getAllHouses);
 
 // GET single house by ID
-housesRouter.get("/:id", houseController.getSingleHouse);
+router.get("/:id", houseController.getSingleHouse);
 
-export default housesRouter;
+export default router;

@@ -1,9 +1,9 @@
-import * as studentsRepository from "../repositories/students.repository.js";
+import * as repository from "../repositories/students.repository.js";
 
 // ALL STUDENTS
 export const getAllStudents = async (req, res) => {
   try {
-    const allStudents = await studentsRepository.getAllStudents();
+    const allStudents = await repository.getAllStudents();
     console.log("allStudents:", allStudents);
     res.json(allStudents);
   } catch (err) {
@@ -16,7 +16,7 @@ export const getAllStudents = async (req, res) => {
 export async function getSingleStudent(req, res) {
   try {
     const id = req.params.id;
-    const student = await studentsRepository.getStudentById(id);
+    const student = await repository.getStudentById(id);
 
     if (student) {
       res.status(200).json(student);
@@ -33,7 +33,7 @@ export async function getSingleStudent(req, res) {
 export async function createStudent(req, res) {
   const student = req.body;
   try {
-    const newStudent = await studentsRepository.createStudent(student);
+    const newStudent = await repository.createStudent(student);
 
     res.status(201).json(newStudent);
   } catch (err) {
@@ -48,7 +48,7 @@ export async function updateStudent(req, res) {
   const id = req.params.id;
 
   try {
-    const updatedStudent = await studentsRepository.updateStudent(id, student);
+    const updatedStudent = await repository.updateStudent(id, student);
 
     if (updatedStudent) {
       res.status(200).json(updatedStudent);
@@ -66,7 +66,7 @@ export async function deleteStudent(req, res) {
   const id = req.params.id;
 
   try {
-    const deletedStudent = await studentsRepository.deleteStudent(id);
+    const deletedStudent = await repository.deleteStudent(id);
 
     if (deletedStudent.rowCount === 0) return res.sendStatus(404);
 

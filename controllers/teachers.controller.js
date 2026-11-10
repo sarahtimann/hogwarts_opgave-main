@@ -1,9 +1,9 @@
-import * as teachersRepository from "../repositories/teachers.repository.js";
+import * as repository from "../repositories/teachers.repository.js";
 
 // ALL TEACHERS
 export const getAllTeachers = async (req, res) => {
   try {
-    const allTeachers = await teachersRepository.getAllTeachers();
+    const allTeachers = await repository.getAllTeachers();
     console.log("allTeachers:", allTeachers);
     res.json(allTeachers);
   } catch (err) {
@@ -16,7 +16,7 @@ export const getAllTeachers = async (req, res) => {
 export async function getSingleTeacher(req, res) {
   try {
     const id = req.params.id;
-    const teacher = await teachersRepository.getTeacherById(id);
+    const teacher = await repository.getTeacherById(id);
 
     if (teacher) {
       res.status(200).json(teacher);
@@ -33,7 +33,7 @@ export async function getSingleTeacher(req, res) {
 export async function createTeacher(req, res) {
   const teacher = req.body;
   try {
-    const newTeacher = await teachersRepository.createTeacher(teacher);
+    const newTeacher = await repository.createTeacher(teacher);
     res.status(201).json(newTeacher);
   } catch (err) {
     console.error(err);
@@ -47,7 +47,7 @@ export async function updateTeacher(req, res) {
   const id = req.params.id;
 
   try {
-    const updatedTeacher = await teachersRepository.updateTeacher(id, teacher);
+    const updatedTeacher = await repository.updateTeacher(id, teacher);
 
     if (updatedTeacher) {
       res.status(200).json(updatedTeacher);
@@ -64,7 +64,7 @@ export async function updateTeacher(req, res) {
 export async function deleteTeacher(req, res) {
   const id = req.params.id;
   try {
-    const deletedTeacher = await teachersRepository.deleteTeacher(id);
+    const deletedTeacher = await repository.deleteTeacher(id);
     if (deletedTeacher.rowCount === 0) return res.sendStatus(404);
 
     res.sendStatus(204);
