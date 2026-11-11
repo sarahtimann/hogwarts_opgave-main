@@ -1,45 +1,33 @@
 import * as repository from "../repositories/students.repository.js";
 
+import HTTPError from "../errorhandling/HTTPError.js";
+
 // ALL STUDENTS
 export const getAllStudents = async (req, res) => {
-  try {
-    const allStudents = await repository.getAllStudents();
-    console.log("allStudents:", allStudents);
-    res.json(allStudents);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
+  const allStudents = await repository.getAllStudents();
+  console.log("allStudents:", allStudents);
+  res.json(allStudents);
 };
 
 // SINGLE STUDENT
 export async function getSingleStudent(req, res) {
-  try {
-    const id = req.params.id;
-    const student = await repository.getStudentById(id);
+  const id = req.params.id;
+  const student = await repository.getStudentById(id);
 
-    if (student) {
-      res.status(200).json(student);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
+  if (student) {
+    return res.status(200).json(student);
   }
+  throw new HTTPError(404, "Student not found.");
 }
 
 // CREATE STUDENT
 export async function createStudent(req, res) {
   const student = req.body;
-  try {
-    const newStudent = await repository.createStudent(student);
-
-    res.status(201).json(newStudent);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
+  const newStudent = await repository.createStudent(student);
+  if (newStudent) {
+    return res.status(201).json(newStudent);
   }
+  throw new HTTPError(500, "Oops, something went wrong.");
 }
 
 // UPDATE STUDENT
@@ -47,32 +35,23 @@ export async function updateStudent(req, res) {
   const student = req.body;
   const id = req.params.id;
 
-  try {
-    const updatedStudent = await repository.updateStudent(id, student);
+  const updatedStudent = await repository.updateStudent(id, student);
 
-    if (updatedStudent) {
-      res.status(200).json(updatedStudent);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
+  if (updatedStudent) {
+    return res.status(200).json(updatedStudent);
   }
+  throw new HTTPError(404, "Student not found.");
 }
 
 // DELETE STUDENT
 export async function deleteStudent(req, res) {
   const id = req.params.id;
 
-  try {
-    const deletedStudent = await repository.deleteStudent(id);
+  const deletedStudent = await repository.deleteStudent(id);
 
-    if (deletedStudent.rowCount === 0) return res.sendStatus(404);
+  if (deletedStudent > 0) return res.sendStatus(204);
 
-    res.sendStatus(204);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Database error" });
+  {
+    throw new HTTPError(404, "Student not found.");
   }
 }
