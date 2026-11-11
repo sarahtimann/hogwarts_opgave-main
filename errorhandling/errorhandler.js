@@ -2,7 +2,10 @@ export default (err, req, res, next) => {
   //   console.log(err.message);
   //   console.log(err.statusCode);
 
-  let error = "Internal Server Error";
+  let statusCode = err.statusCode || 500;
+  let error = err.error || "Internal Server Error";
+  let message = err.message || "Oops, something went wrong.";
+
   if (err.statusCode == 404) {
     error = "Not Found";
   } else if (err.statusCode == 400) {
@@ -20,7 +23,7 @@ export default (err, req, res, next) => {
   }
 
   res.status(err.statusCode).json({
-    message: err.message,
+    message: message,
     error: error,
     status: err.statusCode,
   });
