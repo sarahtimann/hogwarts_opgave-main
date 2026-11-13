@@ -2,11 +2,14 @@ import * as coursesRepository from "../repositories/courses.repository.js";
 
 import HTTPError from "../errorhandling/HTTPError.js";
 
+import UpdateCourseData from "../dtos/updateCourse.dto.js";
+import CreateCourseData from "../dtos/createCourse.dto.js";
+
 // ALL COURSES
 export const getAllCourses = async (req, res) => {
   const allCourses = await coursesRepository.getAllCourses();
   console.log("allCourses:", allCourses);
-  res.json(allCourses);
+  return res.status(200).json(allCourses);
 };
 
 // SINGLE COURSE
@@ -22,8 +25,10 @@ export async function getSingleCourse(req, res) {
 
 // CREATE COURSE
 export async function createCourse(req, res) {
-  const course = req.body;
-  const newCourse = await coursesRepository.createCourse(course);
+  const data = req.body;
+  const createCourseData = CreateCourseData.parse(data);
+
+  const newCourse = await coursesRepository.createCourse(createCourseData);
   if (newCourse) {
     return res.status(201).json(newCourse);
   }
@@ -32,15 +37,17 @@ export async function createCourse(req, res) {
 
 // UPDATE EXISTING COURSE
 export async function updateCourse(req, res) {
-  const course = req.body;
   const id = req.params.id;
+  const data = req.body;
 
-  const updatedCourse = await coursesRepository.updateCourse(id, course);
+  const newCourseData = UpdateCourseData.parse(data);
+
+  const updatedCourse = await coursesRepository.updateCourse(id, newCourseData);
 
   if (updatedCourse) {
     return res.status(200).json(updatedCourse);
   }
-  throw new HTTPError(404, "Course not found.");
+  throw new HTTPError(404, "No course to update found.");
 }
 
 // DELETE SINGLE COURSE
@@ -51,7 +58,7 @@ export async function deleteCourse(req, res) {
 
   if (deletedCourse > 0) return res.sendStatus(204);
   {
-    throw new HTTPError(404, "Course not found.");
+    throw new HTTPError(404, "No course to delete found.");
   }
 }
 

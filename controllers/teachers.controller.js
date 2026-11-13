@@ -59,6 +59,6 @@ export async function deleteTeacher(req, res) {
   if (deletedTeacher > 0) return res.sendStatus(204);
 
   {
-    throw new HTTPError(404, "Teacher not found.");
+    throw new HTTPError(404, "No teacher to delete found.");
   }
 }

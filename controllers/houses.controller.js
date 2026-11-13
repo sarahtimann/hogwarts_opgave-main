@@ -6,7 +6,7 @@ import HTTPError from "../errorhandling/HTTPError.js";
 export const getAllHouses = async (req, res) => {
   const allHouses = await housesRepository.getAllHouses();
   console.log("allHouses:", allHouses);
-  res.json(allHouses);
+  return res.status(200).json(allHouses);
 };
 
 // SINGLE HOUSE
