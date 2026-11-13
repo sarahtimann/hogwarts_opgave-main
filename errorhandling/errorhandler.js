@@ -2,7 +2,7 @@ export default (err, req, res, next) => {
   //   console.log(err.message);
   //   console.log(err.statusCode);
 
-  let statusCode = err.statusCode || 500;
+  const statusCode = err.statusCode || 500;
   let error = err.error || "Internal Server Error";
   let message = err.message || "Oops, something went wrong.";
 
@@ -22,9 +22,9 @@ export default (err, req, res, next) => {
     error = "Internal Server Error";
   }
 
-  res.status(err.statusCode).json({
+  res.status(statusCode).json({
     message: message,
     error: error,
-    status: err.statusCode,
+    status: statusCode,
   });
 };

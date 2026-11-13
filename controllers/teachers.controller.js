@@ -2,11 +2,14 @@ import * as repository from "../repositories/teachers.repository.js";
 
 import HTTPError from "../errorhandling/HTTPError.js";
 
+import UpdateTeacherData from "../dtos/updateTeacher.dto.js";
+import CreateTeacherData from "../dtos/createTeacher.dto.js";
+
 // ALL TEACHERS
 export const getAllTeachers = async (req, res) => {
   const allTeachers = await repository.getAllTeachers();
   console.log("allTeachers:", allTeachers);
-  res.json(allTeachers);
+  return res.status(200).json(allTeachers);
 };
 
 // SINGLE TEACHER
@@ -22,8 +25,10 @@ export async function getSingleTeacher(req, res) {
 
 // CREATE TEACHER
 export async function createTeacher(req, res) {
-  const teacher = req.body;
-  const newTeacher = await repository.createTeacher(teacher);
+  const data = req.body;
+  const createTeacherData = CreateTeacherData.parse(data);
+
+  const newTeacher = await repository.createTeacher(createTeacherData);
   if (newTeacher) {
     return res.status(201).json(newTeacher);
   }
@@ -32,15 +37,17 @@ export async function createTeacher(req, res) {
 
 // UPDATE TEACHER
 export async function updateTeacher(req, res) {
-  const teacher = req.body;
   const id = req.params.id;
+  const data = req.body;
 
-  const updatedTeacher = await repository.updateTeacher(id, teacher);
+  const newTeacherData = UpdateTeacherData.parse(data);
+
+  const updatedTeacher = await repository.updateTeacher(id, newTeacherData);
 
   if (updatedTeacher) {
     return res.status(200).json(updatedTeacher);
   }
-  throw new HTTPError(404, "Teacher not found.");
+  throw new HTTPError(404, "No teacher to update found.");
 }
 
 // DELETE TEACHER

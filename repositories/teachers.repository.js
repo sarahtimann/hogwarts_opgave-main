@@ -43,14 +43,12 @@ export async function createTeacher(teacher) {
 
 // UPDATE TEACHER
 export async function updateTeacher(id, teacher) {
-  const result = await pool.query("UPDATE teachers SET name = $1, house_id = $2 WHERE id = $3 RETURNING name, house_id, id", [
-    teacher.name,
-    teacher.houseId,
-    id,
-  ]);
+  const result = await pool.query("UPDATE teachers SET name = $1, house_id = $2 WHERE id = $3 RETURNING id", [teacher.name, teacher.houseId, id]);
 
-  if (result.rowCount === 0) return res.sendStatus(404);
-  return result.rows[0];
+  if (result.rowCount === 0) return null;
+
+  const updatedId = result.rows[0].id;
+  return getTeacherById(updatedId);
 }
 
 // DELETE TEACHER
