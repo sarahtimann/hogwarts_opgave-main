@@ -19,6 +19,7 @@ import coursesRouter from "./routers/courses.router.js";
 import studentsRouter from "./routers/students.router.js";
 import teachersRouter from "./routers/teachers.router.js";
 import gradesRouter from "./routers/grades.router.js";
+import examsRouter from "./routers/exams.router.js";
 
 const app = express();
 const port = 3001;
@@ -47,6 +48,9 @@ app.use("/houses", housesRouter);
 
 //COURSES
 app.use("/courses", coursesRouter);
+
+// EXAMS
+app.use("/exams", examsRouter);
 
 // TESTS
 app.post("/courses/test", (req, res) => {
