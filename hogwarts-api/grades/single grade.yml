@@ -1,0 +1,18 @@
+info:
+  name: single grade
+  type: http
+
+http:
+  method: GET
+  url: GET http://localhost:3001/grades/:id
+  params:
+    - name: id
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

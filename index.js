@@ -18,6 +18,7 @@ import housesRouter from "./routers/houses.router.js";
 import coursesRouter from "./routers/courses.router.js";
 import studentsRouter from "./routers/students.router.js";
 import teachersRouter from "./routers/teachers.router.js";
+import gradesRouter from "./routers/grades.router.js";
 
 const app = express();
 const port = 3001;
@@ -38,9 +39,11 @@ app.use("/teachers", teachersRouter);
 //STUDENTS
 app.use("/students", studentsRouter);
 
+// GRADES
+app.use("/grades", gradesRouter);
+
 // HOUSES
 app.use("/houses", housesRouter);
-
 
 //COURSES
 app.use("/courses", coursesRouter);
