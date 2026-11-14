@@ -1,6 +1,6 @@
 # Hogwarts Course Management System
 
-Dette projekt er et REST API til at håndtere houses, teachers, students og courses på Hogwarts.
+Dette projekt er et REST API til at håndtere houses, teachers, students, courses, grades og exams på Hogwarts.
 
 Projektet gør det muligt at oprette, hente, opdatere og slette data samt håndtere relationer mellem courses og students og mellem courses og teachers.
 
@@ -38,7 +38,7 @@ npm start
 
 Serveren kører på:
 
-```text
+```
 http://localhost:3001
 ```
 
@@ -53,8 +53,14 @@ Databasen indeholder følgende tabeller:
 - students
 - courses
 - course_students
+- grades
+- exams
 
 Tabellen `course_students` bruges som junctiontabel mellem courses og students, så et course kan have flere students, og en student kan være tilmeldt flere courses.
+
+Tabellen `grades` indeholder Hogwarts' faste karaktersystem.
+
+Tabellen `exams` forbinder courses, students og grades.
 
 SQL-koden til at oprette tabellerne og indsætte eksempeldata findes i `database/hogwarts_database_localhost-2026_11_01_13_45_41-dump.sql`.
 
@@ -107,6 +113,44 @@ Læs mere om, hvad de enkelte gør i pseudocode.md.
 | POST   | `/courses/:id/students/:studentId` | Tilføjer en student til et course |
 | DELETE | `/courses/:id/students/:studentId` | Fjerner en student fra et course  |
 | DELETE | `/courses/:id`                     | Sletter et course                 |
+
+### Grades
+
+| Method | Endpoint      | Beskrivelse        |
+| ------ | ------------- | ------------------ |
+| GET    | `/grades`     | Henter alle grades |
+| GET    | `/grades/:id` | Henter én grade    |
+
+Grades har ikke POST, PUT eller DELETE, fordi karaktersystemet ikke må ændres fra klienten.
+
+### Exams
+
+| Method | Endpoint     | Beskrivelse       |
+| ------ | ------------ | ----------------- |
+| GET    | `/exams`     | Henter alle exams |
+| GET    | `/exams/:id` | Henter én exam    |
+| POST   | `/exams`     | Opretter en exam  |
+| PUT    | `/exams/:id` | Opdaterer en exam |
+| DELETE | `/exams/:id` | Sletter en exam   |
+
+### Nye felter
+
+Courses:
+
+- `type`
+- `level`
+- `schoolYear`
+
+Teachers:
+
+- `employmentStart`
+- `currentlyActive`
+- `deceased`
+
+Students:
+
+- `birthday`
+- `schoolYear`
 
 ## API Testing med Bruno
 
