@@ -62,7 +62,7 @@ Tabellen `grades` indeholder Hogwarts' faste karaktersystem.
 
 Tabellen `exams` forbinder courses, students og grades.
 
-SQL-koden til at oprette tabellerne og indsætte eksempeldata findes i `database/hogwarts_database_localhost-2026_11_01_13_45_41-dump.sql`.
+SQL-koden til at oprette tabellerne og indsætte eksempeldata findes i `database/new-plus-exams.grades-dump.sql`.
 
 En teacher, student eller course kan ikke slettes, hvis andre tabeller stadig refererer til den via en foreign key.
 
