@@ -3,13 +3,13 @@ import { pool } from "../db.js";
 
 // ALl HOUSES
 export async function getAllHouses() {
-  const result = await pool.query("SELECT * FROM houses");
+  const result = await pool.query(/*sql*/ `SELECT * FROM houses`);
   return result.rows;
 }
 
 // SINGLE HOUSE
 export async function getHouseById(id) {
-  const one = await pool.query("SELECT * FROM houses WHERE id = $1", [id]);
+  const one = await pool.query(/*sql*/ `SELECT * FROM houses WHERE id = $1`, [id]);
 
   if (one.rowCount === 0) {
     return null;

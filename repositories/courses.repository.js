@@ -3,13 +3,13 @@ import { pool } from "../db.js";
 
 // ALl COURSES
 export async function getAllCourses() {
-  const result = await pool.query("SELECT * FROM courses");
+  const result = await pool.query(/*sql*/ `SELECT * FROM courses`);
   return result.rows;
 }
 
 // SINGLE COURSE
 export async function getCourseById(id) {
-  const one = await pool.query("SELECT * FROM courses WHERE id = $1", [id]);
+  const one = await pool.query(/*sql*/ `SELECT * FROM courses WHERE id = $1`, [id]);
 
   if (one.rowCount === 0) {
     return null;
@@ -21,7 +21,7 @@ export async function getCourseById(id) {
 // CREATE COURSE
 export async function createCourse(course) {
   const result = await pool.query(
-    `INSERT INTO courses
+    /*sql*/ `INSERT INTO courses
       (name, teacher_id, type, level, school_year)
      VALUES ($1, $2, $3, $4, $5)
      RETURNING id, name, teacher_id, type, level, school_year`,
@@ -34,7 +34,7 @@ export async function createCourse(course) {
 // UPDATE EXISTING COURSE
 export async function updateCourse(id, course) {
   const result = await pool.query(
-    `UPDATE courses
+    /*sql*/ `UPDATE courses
      SET name = $1,
          teacher_id = $2,
          type = $3,
@@ -54,20 +54,20 @@ export async function updateCourse(id, course) {
 
 // DELETE SINGLE COURSE
 export async function deleteCourse(id) {
-  const result = await pool.query("DELETE FROM courses WHERE id = $1", [id]);
+  const result = await pool.query(/*sql*/ `DELETE FROM courses WHERE id = $1`, [id]);
   return result.rowCount;
 }
 
 // SET TEACHER FOR EXISTING COURSE
 export async function setTeacherForCourse(courseId, teacherId) {
-  const teacherResult = await pool.query("SELECT name FROM teachers WHERE id = $1", [teacherId]);
+  const teacherResult = await pool.query(/*sql*/ `SELECT name FROM teachers WHERE id = $1`, [teacherId]);
 
   if (teacherResult.rowCount === 0) {
     return null;
   }
 
   const result = await pool.query(
-    `UPDATE courses
+    /*sql*/ `UPDATE courses
    SET teacher_id = $1
    WHERE id = $2
    RETURNING id, name, teacher_id`,
@@ -83,7 +83,7 @@ export async function setTeacherForCourse(courseId, teacherId) {
 
 // ADD STUDENT TO EXISTING COURSE
 export async function addStudentToCourse(courseId, studentId) {
-  const result = await pool.query("INSERT INTO course_students (course_id, student_id) VALUES ($1, $2) RETURNING course_id, student_id", [
+  const result = await pool.query(/*sql*/ `INSERT INTO course_students (course_id, student_id) VALUES ($1, $2) RETURNING course_id, student_id`, [
     courseId,
     studentId,
   ]);
@@ -93,7 +93,7 @@ export async function addStudentToCourse(courseId, studentId) {
 
 // REMOVE STUDENT FROM EXISTING COURSE
 export async function removeStudentFromCourse(courseId, studentId) {
-  const result = await pool.query("DELETE FROM course_students WHERE course_id = $1 AND student_id = $2", [courseId, studentId]);
+  const result = await pool.query(/*sql*/ `DELETE FROM course_students WHERE course_id = $1 AND student_id = $2`, [courseId, studentId]);
 
   return result.rowCount;
 }
