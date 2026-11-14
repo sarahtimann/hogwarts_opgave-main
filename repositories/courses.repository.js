@@ -21,10 +21,11 @@ export async function getCourseById(id) {
 // CREATE COURSE
 export async function createCourse(course) {
   const result = await pool.query(
-    `INSERT INTO courses (name, teacher_id)
-     VALUES ($1, $2)
-     RETURNING id, name, teacher_id`,
-    [course.name, course.teacherId],
+    `INSERT INTO courses
+      (name, teacher_id, type, level, school_year)
+     VALUES ($1, $2, $3, $4, $5)
+     RETURNING id, name, teacher_id, type, level, school_year`,
+    [course.name, course.teacherId, course.type, course.level, course.schoolYear],
   );
 
   return result.rows[0];
@@ -34,10 +35,14 @@ export async function createCourse(course) {
 export async function updateCourse(id, course) {
   const result = await pool.query(
     `UPDATE courses
-     SET name = $1, teacher_id = $2
-     WHERE id = $3
-     RETURNING id, name, teacher_id`,
-    [course.name, course.teacherId, id],
+     SET name = $1,
+         teacher_id = $2,
+         type = $3,
+         level = $4,
+         school_year = $5
+     WHERE id = $6
+     RETURNING id, name, teacher_id, type, level, school_year`,
+    [course.name, course.teacherId, course.type, course.level, course.schoolYear, id],
   );
 
   if (result.rowCount === 0) {

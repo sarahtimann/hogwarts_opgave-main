@@ -3,9 +3,11 @@
 import * as z from "zod";
 
 const UpdateTeacherDto = z.object({
-  id: z.int().min(0),
   name: z.string(),
   houseId: z.int(),
+  employmentStart: z.coerce.date(),
+  currentlyActive: z.boolean(),
+  deceased: z.boolean(),
 });
 
 export default UpdateTeacherDto;
