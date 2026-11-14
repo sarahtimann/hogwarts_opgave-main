@@ -20,22 +20,30 @@ export async function getStudentById(id) {
 
 // CREATE STUDENT
 export async function createStudent(student) {
-  const result = await pool.query("INSERT INTO students (name, house_id, year) VALUES ($1, $2, $3) RETURNING name, house_id, year", [
-    student.name,
-    student.houseId,
-    student.year,
-  ]);
+  const result = await pool.query(
+    /*sql*/
+    `INSERT INTO students
+      (name, house_id, birthday, school_year)
+     VALUES ($1, $2, $3, $4)
+     RETURNING id, name, house_id, birthday, school_year`,
+    [student.name, student.houseId, student.birthday, student.schoolYear],
+  );
   return result.rows[0];
 }
 
 // UPDATE STUDENT
 export async function updateStudent(id, student) {
-  const result = await pool.query("UPDATE students SET name = $1, house_id = $2, year = $3 WHERE id = $4 RETURNING name, house_id, year, id", [
-    student.name,
-    student.houseId,
-    student.year,
-    id,
-  ]);
+  const result = await pool.query(
+    /*sql*/
+    `UPDATE students
+     SET name = $1,
+         house_id = $2,
+         birthday = $3,
+         school_year = $4
+     WHERE id = $5
+     RETURNING id, name, house_id, birthday, school_year`,
+    [student.name, student.houseId, student.birthday, student.schoolYear, id],
+  );
   if (result.rowCount === 0) return null;
   else {
     return result.rows[0];
